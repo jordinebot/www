@@ -8,16 +8,10 @@
   --text-dark: #e9d5ff;
   --text-dark-hl: #fef3c7;
   --font-base: 16px;
-  --link-tb-normal: #e11d48;
-  --link-tb-dark: #22d3ee;
   --link-gh-normal: #0f172a;
   --link-gh-dark: #fafafa;
-  --link-li-normal: #0284c7;
-  --link-li-dark: #38bdf8;
-  --link-blog-normal: #9333ea;
-  --link-blog-dark: #c4b5fd;
-  --link-email-normal: #f97316;
-  --link-email-dark: #fb923c;
+  --link-email-normal: #ef5777;
+  --link-email-dark: #ef5777;
   --pale-color: #d8d2bd;
 }
 
@@ -134,7 +128,8 @@ footer {
 footer a {
   display: inline-flex;
   align-items: center;
-  font-size: max(8vmin, 36px);
+  font-size: max(4vmin, 18px);
+  font-weight: 800;
   margin-right: 4vmin;
   text-decoration: none;
   position: relative;
