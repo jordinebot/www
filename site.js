@@ -36,11 +36,16 @@
   const RADIUS = 220;
   const MIN_WGHT = 350;
   const MAX_WGHT = 900;
+  const ATTACK_TAU = 0.04;
+  const DECAY_TAU = 0.45;
+  const SETTLE_EPSILON = 0.003;
 
   let centers = [];
+  let currentT = new Array(chars.length).fill(0);
   let mx = -9999, my = -9999;
   let active = false;
   let raf = null;
+  let lastTime = 0;
 
   const measure = () => {
     centers = chars.map((c) => {
@@ -49,26 +54,43 @@
     });
   };
 
-  const render = () => {
-    raf = null;
+  const render = (now) => {
+    const dt = lastTime ? Math.min(0.1, (now - lastTime) / 1000) : 0;
+    lastTime = now;
+    let settling = false;
     for (let i = 0; i < chars.length; i++) {
       const c = centers[i];
-      let t = 0;
+      let goal = 0;
       if (active) {
         const dx = mx - c.x;
         const dy = my - c.y;
         const d = Math.sqrt(dx * dx + dy * dy);
-        t = Math.max(0, 1 - d / RADIUS);
-        t = t * t * (3 - 2 * t);
+        let t = Math.max(0, 1 - d / RADIUS);
+        goal = t * t * (3 - 2 * t);
       }
-      const w = Math.round(MIN_WGHT + (MAX_WGHT - MIN_WGHT) * t);
+      const cur = currentT[i];
+      const tau = goal > cur ? ATTACK_TAU : DECAY_TAU;
+      const k = dt > 0 ? 1 - Math.exp(-dt / tau) : 0;
+      const next = cur + (goal - cur) * k;
+      currentT[i] = next;
+      if (Math.abs(goal - next) > SETTLE_EPSILON) settling = true;
+      const w = Math.round(MIN_WGHT + (MAX_WGHT - MIN_WGHT) * next);
       chars[i].style.fontVariationSettings = `"wght" ${w}`;
-      chars[i].style.setProperty('--t', t.toFixed(3));
+      chars[i].style.setProperty('--t', next.toFixed(3));
+    }
+    if (settling) {
+      raf = requestAnimationFrame(render);
+    } else {
+      raf = null;
+      lastTime = 0;
     }
   };
 
   const schedule = () => {
-    if (raf == null) raf = requestAnimationFrame(render);
+    if (raf == null) {
+      lastTime = 0;
+      raf = requestAnimationFrame(render);
+    }
   };
 
   const onLoad = () => { measure(); schedule(); };
