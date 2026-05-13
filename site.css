@@ -27,16 +27,26 @@
   }
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-html { height: 100%; width: 100%; -webkit-text-size-adjust: 100%; }
+html {
+  height: 100%;
+  width: 100%;
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
   margin: 0;
   background: var(--bg-normal);
   display: flex;
   flex-direction: column;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji";
   font-size: var(--font-base);
   height: 100%;
   justify-content: space-between;
@@ -50,7 +60,15 @@ main {
 }
 
 main h1 {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI Variable",
+    "Segoe UI",
+    Helvetica,
+    Arial,
+    sans-serif;
   color: var(--pale-color);
   font-size: max(10vmin, 26px);
   font-variation-settings: "wght" 400;
@@ -72,7 +90,11 @@ main h1 .word {
 main h1 .char {
   --t: 0;
   --target-color: currentColor;
-  color: color-mix(in oklab, var(--target-color) calc(var(--t) * 100%), var(--pale-color));
+  color: color-mix(
+    in oklab,
+    var(--target-color) calc(var(--t) * 100%),
+    var(--pale-color)
+  );
   display: inline-block;
 }
 
@@ -90,8 +112,10 @@ main h1 a::after {
   right: 0;
   top: 0;
   opacity: 0;
-  transform: translateY(-20%) translateX(85%);
-  transition: opacity 150ms ease-in-out, margin-top 150ms ease-in-out;
+  transform: translateY(-20%) translateX(50%);
+  transition:
+    opacity 150ms ease-in-out,
+    margin-top 150ms ease-in-out;
 }
 
 main h1 a:hover::after {
@@ -113,6 +137,7 @@ footer a {
   font-size: max(8vmin, 36px);
   margin-right: 4vmin;
   text-decoration: none;
+  position: relative;
 }
 
 footer a svg {
@@ -121,24 +146,87 @@ footer a svg {
   display: block;
 }
 
-footer a.github   { color: var(--link-gh-normal); }
-footer a.linkedin { color: var(--link-li-normal); }
-footer a.email    { color: var(--link-email-normal); }
-footer a.blog     { color: var(--link-blog-normal); }
-
-@media (prefers-color-scheme: dark) {
-  body { background: var(--bg-dark); }
-  main { border-top-color: var(--border-dark); }
-  main h1 { color: var(--text-dark); }
-  main h1 .who { color: var(--text-dark-hl); }
-  main h1 a { color: var(--link-tb-dark); }
-  footer a.github   { color: var(--link-gh-dark); }
-  footer a.linkedin { color: var(--link-li-dark); }
-  footer a.email    { color: var(--link-email-dark); }
-  footer a.blog     { color: var(--link-blog-dark); }
+footer a::after {
+  content: "↗";
+  color: inherit;
+  font-size: 38%;
+  font-weight: 500;
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  transform: translateY(-20%) translateX(85%);
+  transition:
+    opacity 150ms ease-in-out,
+    margin-top 150ms ease-in-out;
+  pointer-events: none;
 }
 
-@media only screen and (min-width: 768px)  { main { padding-right: 12vmin; } }
-@media only screen and (min-width: 1024px) { main { padding-right: 24vmin; } }
-@media only screen and (min-width: 1280px) { main { padding-right: 32vmin; } }
-@media only screen and (min-width: 1440px) { main { padding-right: 50vmin; } }
+footer a:hover::after {
+  opacity: 1;
+  margin-top: -3px;
+}
+
+footer a.github {
+  color: var(--link-gh-normal);
+}
+footer a.linkedin {
+  color: var(--link-li-normal);
+}
+footer a.email {
+  color: var(--link-email-normal);
+}
+footer a.blog {
+  color: var(--link-blog-normal);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: var(--bg-dark);
+  }
+  main {
+    border-top-color: var(--border-dark);
+  }
+  main h1 {
+    color: var(--text-dark);
+  }
+  main h1 .who {
+    color: var(--text-dark-hl);
+  }
+  main h1 a {
+    color: var(--link-tb-dark);
+  }
+  footer a.github {
+    color: var(--link-gh-dark);
+  }
+  footer a.linkedin {
+    color: var(--link-li-dark);
+  }
+  footer a.email {
+    color: var(--link-email-dark);
+  }
+  footer a.blog {
+    color: var(--link-blog-dark);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  main {
+    padding-right: 12vmin;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  main {
+    padding-right: 24vmin;
+  }
+}
+@media only screen and (min-width: 1280px) {
+  main {
+    padding-right: 32vmin;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  main {
+    padding-right: 50vmin;
+  }
+}
