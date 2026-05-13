@@ -113,7 +113,7 @@
     onLoad();
   }
 
-  document.addEventListener('mousemove', (e) => {
+  document.addEventListener('pointermove', (e) => {
     mx = e.clientX;
     my = e.clientY;
     active = true;
@@ -121,27 +121,13 @@
     schedule();
   }, { passive: true });
 
-  document.addEventListener('mouseleave', () => {
-    active = false;
-    schedule();
-  });
-
-  document.addEventListener('touchmove', (e) => {
-    const t = e.touches[0];
-    if (!t) return;
-    mx = t.clientX;
-    my = t.clientY;
-    active = true;
-    if (!centers.length) measure();
-    schedule();
-  }, { passive: true });
-
-  const onTouchEnd = () => {
+  const onPointerEnd = () => {
     active = false;
     schedule();
   };
-  document.addEventListener('touchend', onTouchEnd);
-  document.addEventListener('touchcancel', onTouchEnd);
+  document.addEventListener('pointerleave', onPointerEnd);
+  document.addEventListener('pointerup', onPointerEnd);
+  document.addEventListener('pointercancel', onPointerEnd);
 
   window.addEventListener('resize', () => { measure(); schedule(); });
   window.addEventListener('scroll', () => { measure(); schedule(); }, { passive: true });
