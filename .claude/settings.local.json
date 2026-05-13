@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:andrewgioia.com)",
+      "Bash(curl -s https://andrewgioia.com/)",
+      "Bash(curl -s https://andrewgioia.com/site.css)",
+      "WebFetch(domain:coolors.co)",
+      "Bash(curl -sL \"https://coolors.co/?home\" -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36\" -o /tmp/coolors.html)",
+      "Read(//tmp/**)",
+      "Bash(grep -n \"homepage_footer-payoff\\\\|homepage-animatable\" /tmp/coolors.html | head -40)",
+      "Read(//private/tmp/**)",
+      "Bash(curl -sL \"https://coolors.co/assets/css/dist/style.min.css?v=63\" -o /tmp/coolors.css)",
+      "Bash(grep -oE '[^,{}]*homepage[^,{}]*\\\\{[^}]*\\\\}' /tmp/coolors.css)",
+      "Bash(grep -oE '[^,{}]*footer-payoff[^,{}]*\\\\{[^}]*\\\\}' /tmp/coolors.css)",
+      "Bash(grep -oE '[^,{}]*homepage-animatable[^,{}]*\\\\{[^}]*\\\\}' /tmp/coolors.css)",
+      "Bash(curl -sL \"https://coolors.co/assets/js/dist/script.min.js?v=62\" -o /tmp/coolors.js)",
+      "Bash(grep -oE '[^,{}]*homepage_title[^,{}]*\\\\{[^}]*\\\\}' /tmp/coolors.css)",
+      "Bash(grep -oE 'font-variation-settings[^\"]{0,80}' /tmp/coolors.js)",
+      "Bash(grep -oE '\"wght\"[^\"]{0,40}' /tmp/coolors.js)",
+      "Bash(grep -oE 'wght[^\"]{0,30}' /tmp/coolors.js)"
+    ]
+  }
+}

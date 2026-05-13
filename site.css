@@ -1,0 +1,141 @@
+:root {
+  --bg-normal: #fefbe9;
+  --bg-dark: #0f0a1f;
+  --border-normal: #fff;
+  --border-dark: #2e1065;
+  --text-normal: #4338ca;
+  --text-normal-hl: #1e1b4b;
+  --text-dark: #e9d5ff;
+  --text-dark-hl: #fef3c7;
+  --font-base: 16px;
+  --link-tb-normal: #e11d48;
+  --link-tb-dark: #22d3ee;
+  --link-gh-normal: #0f172a;
+  --link-gh-dark: #fafafa;
+  --link-li-normal: #0284c7;
+  --link-li-dark: #38bdf8;
+  --link-blog-normal: #9333ea;
+  --link-blog-dark: #c4b5fd;
+  --link-email-normal: #f97316;
+  --link-email-dark: #fb923c;
+  --pale-color: #d8d2bd;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pale-color: #3a2e54;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { height: 100%; width: 100%; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg-normal);
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: var(--font-base);
+  height: 100%;
+  justify-content: space-between;
+  overflow: hidden;
+  width: 100vw;
+}
+
+main {
+  border-top: 1vmax solid var(--border-normal);
+  padding: 5vmin 6vmin 0;
+}
+
+main h1 {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--pale-color);
+  font-size: max(10vmin, 26px);
+  font-variation-settings: "wght" 400;
+  letter-spacing: -0.035em;
+  line-height: max(11vmin, 32px);
+  margin: 0;
+  cursor: default;
+}
+
+main h1 .who {
+  display: block;
+}
+
+main h1 .char {
+  --t: 0;
+  --target-color: currentColor;
+  color: color-mix(in oklab, var(--target-color) calc(var(--t) * 100%), var(--pale-color));
+  display: inline-block;
+  transition: color 0.3s cubic-bezier(0.6, 0.4, 0, 1),
+              font-variation-settings 0.3s cubic-bezier(0.6, 0.4, 0, 1);
+}
+
+main h1 a {
+  color: var(--link-tb-normal);
+  text-decoration: none;
+  position: relative;
+}
+
+main h1 a::after {
+  content: "↗";
+  color: inherit;
+  font-size: 60%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  transform: translateY(-20%) translateX(85%);
+  transition: opacity 150ms ease-in-out, margin-top 150ms ease-in-out;
+}
+
+main h1 a:hover::after {
+  opacity: 1;
+  margin-top: -3px;
+}
+
+footer {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 5vmin 6vmin;
+}
+
+footer a {
+  display: inline-flex;
+  align-items: center;
+  font-size: max(8vmin, 36px);
+  margin-right: 4vmin;
+  text-decoration: none;
+}
+
+footer a svg {
+  width: 1em;
+  height: 1em;
+  display: block;
+}
+
+footer a.github   { color: var(--link-gh-normal); }
+footer a.linkedin { color: var(--link-li-normal); }
+footer a.email    { color: var(--link-email-normal); }
+footer a.blog     { color: var(--link-blog-normal); }
+
+@media (prefers-color-scheme: dark) {
+  body { background: var(--bg-dark); }
+  main { border-top-color: var(--border-dark); }
+  main h1 { color: var(--text-dark); }
+  main h1 .who { color: var(--text-dark-hl); }
+  main h1 a { color: var(--link-tb-dark); }
+  footer a.github   { color: var(--link-gh-dark); }
+  footer a.linkedin { color: var(--link-li-dark); }
+  footer a.email    { color: var(--link-email-dark); }
+  footer a.blog     { color: var(--link-blog-dark); }
+}
+
+@media only screen and (min-width: 768px)  { main { padding-right: 12vmin; } }
+@media only screen and (min-width: 1024px) { main { padding-right: 24vmin; } }
+@media only screen and (min-width: 1280px) { main { padding-right: 32vmin; } }
+@media only screen and (min-width: 1440px) { main { padding-right: 50vmin; } }
