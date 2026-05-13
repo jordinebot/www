@@ -64,6 +64,11 @@ main h1 .who {
   display: block;
 }
 
+main h1 .word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 main h1 .char {
   --t: 0;
   --target-color: currentColor;

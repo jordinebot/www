@@ -4,37 +4,49 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const PALETTE = ['#e11d48', '#f97316', '#fbbf24', '#10b981', '#06b6d4', '#3b82f6', '#9333ea'];
+  const MIN_WGHT_DEFAULT = 350;
+  const MIN_WGHT_WHO = 600;
   let paletteIdx = 0;
 
-  const wrapChars = (node, insideLink = false) => {
+  const wrapChars = (node, ctx = { insideLink: false, insideWho: false }) => {
     for (const child of Array.from(node.childNodes)) {
       if (child.nodeType === Node.TEXT_NODE) {
         const frag = document.createDocumentFragment();
-        for (const ch of child.textContent) {
-          if (/\s/.test(ch)) {
-            frag.appendChild(document.createTextNode(ch));
+        const tokens = child.textContent.match(/\s+|\S+/g) || [];
+        for (const token of tokens) {
+          if (/^\s+$/.test(token)) {
+            frag.appendChild(document.createTextNode(token));
           } else {
-            const span = document.createElement('span');
-            span.className = 'char';
-            span.textContent = ch;
-            if (!insideLink) {
-              span.style.setProperty('--target-color', PALETTE[paletteIdx % PALETTE.length]);
-              paletteIdx++;
+            const word = document.createElement('span');
+            word.className = 'word';
+            for (const ch of token) {
+              const span = document.createElement('span');
+              span.className = 'char';
+              span.textContent = ch;
+              span.dataset.minWght = ctx.insideWho ? MIN_WGHT_WHO : MIN_WGHT_DEFAULT;
+              if (!ctx.insideLink) {
+                span.style.setProperty('--target-color', PALETTE[paletteIdx % PALETTE.length]);
+                paletteIdx++;
+              }
+              word.appendChild(span);
             }
-            frag.appendChild(span);
+            frag.appendChild(word);
           }
         }
         child.parentNode.replaceChild(frag, child);
       } else if (child.nodeType === Node.ELEMENT_NODE) {
-        wrapChars(child, insideLink || child.tagName === 'A');
+        wrapChars(child, {
+          insideLink: ctx.insideLink || child.tagName === 'A',
+          insideWho: ctx.insideWho || (child.classList && child.classList.contains('who')),
+        });
       }
     }
   };
   wrapChars(target);
 
   const chars = Array.from(target.querySelectorAll('.char'));
+  const mins = chars.map((c) => Number(c.dataset.minWght));
   const RADIUS = 220;
-  const MIN_WGHT = 350;
   const MAX_WGHT = 900;
   const ATTACK_TAU = 0.04;
   const DECAY_TAU = 0.45;
@@ -74,7 +86,8 @@
       const next = cur + (goal - cur) * k;
       currentT[i] = next;
       if (Math.abs(goal - next) > SETTLE_EPSILON) settling = true;
-      const w = Math.round(MIN_WGHT + (MAX_WGHT - MIN_WGHT) * next);
+      const minW = mins[i];
+      const w = Math.round(minW + (MAX_WGHT - minW) * next);
       chars[i].style.fontVariationSettings = `"wght" ${w}`;
       chars[i].style.setProperty('--t', next.toFixed(3));
     }
