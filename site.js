@@ -4,7 +4,7 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const PALETTE = ['#e11d48', '#f97316', '#fbbf24', '#10b981', '#06b6d4', '#3b82f6', '#9333ea'];
-  const MIN_WGHT_DEFAULT = 350;
+  const MIN_WGHT_DEFAULT = 400;
   const MIN_WGHT_WHO = 600;
   let paletteIdx = 0;
 
