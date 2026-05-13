@@ -126,6 +126,23 @@
     schedule();
   });
 
+  document.addEventListener('touchmove', (e) => {
+    const t = e.touches[0];
+    if (!t) return;
+    mx = t.clientX;
+    my = t.clientY;
+    active = true;
+    if (!centers.length) measure();
+    schedule();
+  }, { passive: true });
+
+  const onTouchEnd = () => {
+    active = false;
+    schedule();
+  };
+  document.addEventListener('touchend', onTouchEnd);
+  document.addEventListener('touchcancel', onTouchEnd);
+
   window.addEventListener('resize', () => { measure(); schedule(); });
   window.addEventListener('scroll', () => { measure(); schedule(); }, { passive: true });
 })();
